@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export const snakBarSlice = createSlice({
-  name: "register",
+  name: "snakBar",
   initialState,
   reducers: {
     updateSnakMsg: (state, action) => {

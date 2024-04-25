@@ -14,7 +14,10 @@ const SignUp = () => {
     <form
       className="signupform"
       onSubmit={async (e) => {
-        await onSignUp(e);
+        const res = await onSignUp(e);
+        if (res) {
+          routeChange();
+        }
       }}
     >
       <div className="userSec inputEle">

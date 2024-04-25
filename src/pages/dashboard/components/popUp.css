@@ -1,0 +1,46 @@
+.popUpWindow{
+    width:100vw;
+    height:100vh;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popUpContainer{
+    box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);
+    width:fit-content;
+    height:fit-content;
+   background-color: white;
+}
+#prjName{
+    width: 180px;
+    height: 30px;
+}
+.projectForm{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    justify-content: flex-start;
+    height: 100%;
+}
+.projectContainer{
+    height: 300px;
+    width: 300px;
+}
+#projectDes{
+}
+#addPrjButton{
+    background-color: rgb(107, 132, 86);
+    width: 150px;
+    height: 45px;
+    padding: 5px 20px;
+    color: white;
+    font-size: larger;
+    border: 0px;
+    border-radius: 5px;
+}

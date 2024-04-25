@@ -1,0 +1,53 @@
+.leftDrawer{
+    position: absolute;
+    top: 0;
+    left:0;
+    width:200px;
+    height: 100vh;
+    background-color: white;
+    z-index: 2;
+    border: 2px solid black;
+    
+}
+#drawHeader{
+    height: 65px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+    border-bottom: 2px solid black;
+}
+#drawFooter{
+    height: 65px;
+    width: 100%;
+    border-top: 2px solid black;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: 25px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+#drawBody{
+    height:calc(100vh - 130px);
+    width: 100%;
+    overflow-y: scroll;
+}
+.projectBox{
+    width: calc(100% - 9px);
+    height: 35px;
+    padding-left:5px ;
+    font-size: large;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 2px solid rgb(75, 75, 207);
+}
+.projectBox:hover{
+    background-color: rgb(148, 84, 207);
+}
+.currentPrj{
+    background-color: rgb(148, 84, 207);;
+}

@@ -10,8 +10,20 @@ const Login = () => {
     let path = `signUp`;
     navigate(path);
   };
+  const routeMain = () => {
+    let path = "../../dash";
+    navigate(path);
+  };
   return (
-    <form className="loginform" onSubmit={onLoginSubmit}>
+    <form
+      className="loginform"
+      onSubmit={async (e) => {
+        const res = onLoginSubmit(e);
+        if (res) {
+          routeMain();
+        }
+      }}
+    >
       <div className="userSec inputEle">
         <label for="email">Email</label>
         <input type="text" name="email" placeholder="xyz@example.com"></input>
