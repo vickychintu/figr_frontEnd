@@ -44,7 +44,6 @@ const StylesBox = () => {
         <div
           className="styleFooter"
           onClick={() => {
-            console.log(dash.allColor);
             dispatch(updateColor(true));
           }}
         >
@@ -159,7 +158,7 @@ const StylesBox = () => {
       <div id="bottonBox" className="stylesBox">
         <div className="styleHeader">Button</div>
         <div className="styleBody">
-          {dash.allButtons.map((x, i) => {
+          {dash.allButtons?.map((x, i) => {
             return (
               <div
                 style={{
