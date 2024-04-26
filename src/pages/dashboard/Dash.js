@@ -38,7 +38,7 @@ const Dash = () => {
       </div>
       <LeftDrawer />
       {component.projectPop && <PopUp children={<Project />} />}
-      {/* {component.colorPop && <PopUp children={<ColorPop />} />} */}
+      {component.colorPop && <PopUp children={<ColorPop />} />}
       {component.radiusPop && <PopUp children={<RadiusPop />} />}
       {component.spacePop && <PopUp children={<SpacePop />} />}
       {component.buttonPop && <PopUp children={<ButtonPop />} />}
