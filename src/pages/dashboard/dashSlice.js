@@ -6,6 +6,10 @@ const initialState = {
   allPrj: [],
   currentPrjId: "",
   currentPrjNo: 1,
+  allColor: [],
+  allRadius: [],
+  allSpace: [],
+  allButtons: [],
 };
 
 export const dashSlice = createSlice({
@@ -24,11 +28,26 @@ export const dashSlice = createSlice({
       state.allPrj = action.payload;
     },
     setCurrentPrj: (state, action) => {
+      console.log(action.payload.prjId);
       state.currentPrjNo = action.payload.prjNo;
       state.currentPrjId = action.payload.prjId;
     },
+    setAllStyle: (state, action) => {
+      state.allColor = action.payload.color;
+      state.allRadius = action.payload.radius;
+      state.allSpace = action.payload.space;
+    },
+    setAllComp: (state, action) => {
+      state.allButtons = action.payload;
+    },
   },
 });
-export const { prjStateUpdate, setAllPrj, setCurrentPrj } = dashSlice.actions;
+export const {
+  prjStateUpdate,
+  setAllPrj,
+  setCurrentPrj,
+  setAllStyle,
+  setAllComp,
+} = dashSlice.actions;
 
 export default dashSlice.reducer;

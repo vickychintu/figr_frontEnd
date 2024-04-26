@@ -7,6 +7,7 @@ import SignUp from "./pages/login/SignUp";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSnakState } from "./snakBarSlice";
 import Dash from "./pages/dashboard/Dash";
+import { useEffect } from "react";
 function App() {
   const snakBar = useSelector((state) => state.snakBar);
   const dispatch = useDispatch();

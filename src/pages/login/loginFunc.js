@@ -1,9 +1,19 @@
 import prjApi from "../../api/projectApi";
 import RegApi from "../../api/registerApi";
+import styleApi from "../../api/styleApi";
 import { store } from "../../app/store";
 import { updateSnakMsg, updateSnakState } from "../../snakBarSlice";
-import { updateProjectPop } from "../dashboard/components/componentSlice";
-import { prjStateUpdate, setAllPrj } from "../dashboard/dashSlice";
+import {
+  updateAllpop,
+  updateProjectPop,
+} from "../dashboard/components/componentSlice";
+import {
+  prjStateUpdate,
+  setAllComp,
+  setAllPrj,
+  setAllStyle,
+  setCurrentPrj,
+} from "../dashboard/dashSlice";
 import { regStateUpdate } from "./registerSlice";
 
 const isEmail = (str) => {
@@ -47,6 +57,136 @@ const passWdMAtches = (passwd1, passwd2) => {
     return false;
   }
 };
+const addButton = async (e) => {
+  try {
+    e.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+    const prjId = store.getState().dash.currentPrjId;
+    await styleApi.addComponent(accessToken, {
+      projectId: prjId,
+      colorId: e.target.colors.value,
+      spaceId: e.target.space.value,
+      radiusId: e.target.radius.value,
+      name: e.target.buttonName.value,
+      type: "button",
+    });
+    store.dispatch(updateAllpop(false));
+    store.dispatch(updateSnakState(true));
+    store.dispatch(updateSnakMsg("Button added"));
+    getComponents(prjId);
+  } catch (error) {
+    console.log(error);
+    store.dispatch(
+      updateSnakMsg(
+        error.response ? error.response.data.message : "Server error"
+      )
+    );
+    store.dispatch(updateSnakState(true));
+    return false;
+  }
+};
+const addStyle = async (e, type) => {
+  try {
+    e.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+    const prjId = store.getState().dash.currentPrjId;
+    await styleApi.addStyle(accessToken, {
+      type: type,
+      projectId: prjId,
+      name: e.target.colorName.value,
+      value: e.target.colorHex.value,
+    });
+    store.dispatch(updateAllpop(false));
+    store.dispatch(updateSnakState(true));
+    store.dispatch(updateSnakMsg("Style added"));
+    getStyles(prjId);
+  } catch (error) {
+    console.log(error);
+    store.dispatch(
+      updateSnakMsg(
+        error.response ? error.response.data.message : "Server error"
+      )
+    );
+    store.dispatch(updateSnakState(true));
+    return false;
+  }
+};
+const getComponents = async (prjId) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+    // const prjId = store.getState().dash.currentPrjId;
+    console.log(prjId);
+    const components = await styleApi.getComponentsByProjectId(
+      accessToken,
+      prjId
+    );
+    console.log(components);
+    // let c = [];
+    // let radius = [];
+    // let space = [];
+    // Styles.map((x) => {
+    //   if (x._id == "color") color = x.styles;
+    //   if (x._id == "radius") radius = x.styles;
+    //   if (x._id == "space") space = x.styles;
+    // });
+    store.dispatch(setAllComp(components.button));
+    console.log(components.button);
+    return true;
+  } catch (error) {
+    console.log(error);
+    store.dispatch(
+      updateSnakMsg(
+        error.response ? error.response.data.message : "Server error"
+      )
+    );
+    store.dispatch(updateSnakState(true));
+    return false;
+  }
+};
+const getStyles = async (prjId) => {
+  try {
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+    if (!accessToken) {
+      throw new Error("Access token not found");
+    }
+    // const prjId = store.getState().dash.currentPrjId;
+    console.log(prjId);
+    const Styles = await styleApi.getStyles(accessToken, prjId);
+    console.log(Styles);
+    let color = [];
+    let radius = [];
+    let space = [];
+    Styles.map((x) => {
+      if (x._id == "color") color = x.styles;
+      if (x._id == "radius") radius = x.styles;
+      if (x._id == "space") space = x.styles;
+    });
+    store.dispatch(setAllStyle({ color, radius, space }));
+    return true;
+  } catch (error) {
+    console.log(error);
+    store.dispatch(
+      updateSnakMsg(
+        error.response ? error.response.data.message : "Server error"
+      )
+    );
+    store.dispatch(updateSnakState(true));
+    return false;
+  }
+};
 const getProjects = async () => {
   try {
     const accessToken = localStorage.getItem("accessToken");
@@ -57,6 +197,9 @@ const getProjects = async () => {
     const projects = await prjApi.getAllProjects(accessToken);
     console.log(projects);
     store.dispatch(setAllPrj(projects));
+    if (projects.length == 1) {
+      store.dispatch(setCurrentPrj({ prjNo: 0, prjId: projects[0]._id }));
+    }
     return projects[0];
   } catch (error) {
     console.log(error);
@@ -173,7 +316,6 @@ const onLoginSubmit = async (e) => {
     // Handle successful registration
     console.log(userData);
     localStorage.setItem("accessToken", userData.data.accessToken);
-
     return true;
   } catch (error) {
     // Handle registration error
@@ -189,4 +331,13 @@ const onLoginSubmit = async (e) => {
     store.dispatch(updateSnakState(true));
   }
 };
-export { onLoginSubmit, onSignUp, onAddPrj, getProjects };
+export {
+  onLoginSubmit,
+  onSignUp,
+  onAddPrj,
+  getProjects,
+  addStyle,
+  getStyles,
+  addButton,
+  getComponents,
+};

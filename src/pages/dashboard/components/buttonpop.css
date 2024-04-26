@@ -1,0 +1,21 @@
+.buttonPop{
+    width: 450px;
+    height: 300px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    padding: 10px;
+}
+.buttonForm{
+    border-right: 1px solid black;
+}
+.buttonPreview{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    text-align: center;
+    align-items: center;
+}
+#cutomBut{
+    width:120px;
+    height: 60px;
+}

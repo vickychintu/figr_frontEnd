@@ -4,18 +4,25 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { updateDrawerState, updateProjectPop } from "./componentSlice";
 import { IconButton } from "@mui/material";
 import { useEffect } from "react";
-import { getProjects } from "../../login/loginFunc";
+import { getComponents, getProjects, getStyles } from "../../login/loginFunc";
 import { setCurrentPrj } from "../dashSlice";
 const LeftDrawer = () => {
   useEffect(() => {
-    const prj1 = getProjects();
-    setPrj(prj1._id, 0);
+    setPrjonce();
   }, []);
+  const setPrjonce = async () => {
+    const prj1 = await getProjects();
+    const prj2 = await getStyles(prj1 && prj1._id);
+    console.log(prj1);
+    if (prj1) setPrj(prj1._id, 0);
+  };
   const component = useSelector((state) => state.component);
   const dispatch = useDispatch();
   const dash = useSelector((state) => state.dash);
   const setPrj = (id, no) => {
     dispatch(setCurrentPrj({ prjNo: no, prjId: id }));
+    getStyles(id);
+    getComponents(id);
   };
   return (
     <div
